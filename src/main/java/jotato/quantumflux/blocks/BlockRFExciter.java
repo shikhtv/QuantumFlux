@@ -14,6 +14,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.IBlockAccess;
@@ -33,67 +34,76 @@ public class BlockRFExciter extends BlockBase implements ITileEntityProvider
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)
 	{
-		float minx = 0, miny = 0, minz = 0, maxx = 1, maxy = 1, maxz = 1;
+		AxisAlignedBB bounds = BlockRFExciter.getBlockBoundsForState(world.getBlockMetadata(x, y, z));
+		setBlockBounds((float) bounds.minX, (float) bounds.minY, (float) bounds.minZ, 
+				(float) bounds.maxX, (float) bounds.maxY,(float) bounds.maxZ);
+	}
 
-		switch (world.getBlockMetadata(x, y, z))
+	public static AxisAlignedBB getBlockBoundsForState(int meta)
+	{
+		double minx = 0, miny = 0, minz = 0, maxx = 1, maxy = 1, maxz = 1;
+
+		switch (meta)
 		{
 		case 1: // top (ypos)
-			maxx = .85f;
+			maxx = .8;
 			maxy = 1f;
-			maxz = .85f;
+			maxz = .8;
 
-			minx = .15f;
-			miny = .88f;
-			minz = .15f;
+			minx = .2;
+			miny = .9;
+			minz = .2;
 			break;
 		case 2: // north (zneg)
-			maxx = .85f;
-			maxy = .85f;
-			maxz = .12f;
+			maxx = .8;
+			maxy = .8;
+			maxz = .1;
 
-			minx = .15f;
-			miny = .15f;
-			minz = 0f;
+			minx = .2;
+			miny = .2;
+			minz = 0;
 			break;
 		case 3: // south (zpos)
-			maxx = .85f;
-			maxy = .85f;
+			maxx = .8;
+			maxy = .8;
 			maxz = 1;
 
-			minx = .15f;
-			miny = .15f;
-			minz = .88f;
+			minx = .2;
+			miny = .2;
+			minz = .9;
 			break;
 		case 4: // west (xneg)
-			maxx = .12f;
-			maxy = .85f;
-			maxz = .85f;
+			maxx = .1;
+			maxy = .8;
+			maxz = .8;
 
-			minx = 0f;
-			miny = .15f;
-			minz = .15f;
+			minx = 0;
+			miny = .2;
+			minz = .2;
 			break;
 		case 5: // east (xpos)
-			maxx = 1f;
-			maxy = .85f;
-			maxz = .85f;
+			maxx = 1;
+			maxy = .8;
+			maxz = .8;
 
-			minx = .88f;
-			miny = .15f;
-			minz = .15f;
+			minx = .9;
+			miny = .2;
+			minz = .2;
 			break;
 
 		default: // bottom (yneg)
-			maxx = .85f;
-			maxy = .12f;
-			maxz = .85f;
+			maxx = .8;
+			maxy = .1;
+			maxz = .8;
 
-			minx = .15f;
-			miny = 0f;
-			minz = .15f;
+			minx = .2;
+			miny = 0;
+			minz = .2;
 			break;
 		}
-		setBlockBounds(minx, miny, minz, maxx, maxy, maxz);
+		
+		return AxisAlignedBB.getBoundingBox(minx, miny, minz, maxx, maxy, maxz);
+
 	}
 
 	@Override
@@ -145,7 +155,8 @@ public class BlockRFExciter extends BlockBase implements ITileEntityProvider
 			{
 				String used = NumberFormat.getIntegerInstance().format(((TileEntityRFExciter) entity).lastEnergyUsed);
 				String max = NumberFormat.getIntegerInstance().format(((TileEntityRFExciter) entity).getNetPower());
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.LIGHT_PURPLE + used + " RF used last tick (max: " + max + ")"));
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.LIGHT_PURPLE + used + " RF used last tick (max: " + max
+						+ ")"));
 			}
 		}
 

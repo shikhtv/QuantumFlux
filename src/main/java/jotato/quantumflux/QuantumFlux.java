@@ -1,6 +1,7 @@
 package jotato.quantumflux;
 
 import jotato.quantumflux.blocks.ModBlocks;
+import jotato.quantumflux.fmp.FMPIntegration;
 import jotato.quantumflux.items.ModItems;
 import jotato.quantumflux.packets.PacketHandler;
 import jotato.quantumflux.proxy.CommonProxy;
@@ -18,6 +19,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -30,7 +32,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid = Reference.MODID, version = Reference.VERSION, name = Reference.MODNAME, dependencies="required-after:CoFHAPI")
+@Mod(modid = Reference.MODID, version = Reference.VERSION, name = Reference.MODNAME, dependencies="required-after:CoFHAPI;after:ForgeMultipart")
 public class QuantumFlux
 {
 
@@ -49,6 +51,11 @@ public class QuantumFlux
         ModItems.init();
         regiterTileEntities();
         FMLCommonHandler.instance().bus().register(new EventHooks());
+        
+        if (Loader.isModLoaded("ForgeMultipart")) {
+       
+			new FMPIntegration().init();
+		}
     }
 
     //todo: maybe this should be moved into its own thing
