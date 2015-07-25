@@ -1,8 +1,8 @@
 item.amplificationCrystal.name=Кристалл усиления
 item.ironCasing.name=Железная оболочка
 item.steelIngot.name=Стальной слиток
-item.goldCasing.name=Золотая оьолочка
-item.quibitCrystal.name=Квибит кристалл
+item.goldCasing.name=Золотая оболочка
+item.quibitCrystal.name=Кристалл Квибита
 item.manganese.name=Марганцевая пыль
 item.mangalloyIngot.name=Марганцевый сплав
 item.zbq7.name=ZBQ-7
@@ -44,13 +44,13 @@ tile.quibitCluster.3.name=Кластер Квибита 4 ур.
 tile.quibitCluster.4.name=Кластер Квибита 5 ур.
 
 tile.zeroPointExtractor.name=Экстрактор Нулевой Точки (ЭНТ)
-tile.rfEntangler.name=RF Улавливатель
-tile.rfExciter.name=RF Резонатор
+tile.rfEntangler.name=RF Квантовая сеть
+tile.rfExciter.name=RF Улавливатель
 tile.darkstone.name=Темнокамень
 tile.darkstone_lamp.name=Темнокаменная лампа
 tile.darkstone_pillar.name=Темнокаменная колонна
 tile.darkstone_tile.name=Темнокаменная плита
-tile.imaginaryTime.name=Блок Мнимого времени
+tile.imaginaryTime.name=Блок Ложного времени
 tile.itemFabricator.name=Создатель предметов
 tile.titaniumOre.name=Титановая руда
 
