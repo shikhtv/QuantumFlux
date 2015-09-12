@@ -4,8 +4,8 @@ import java.util.List;
 
 import cofh.api.energy.IEnergyContainerItem;
 import jotato.quantumflux.ConfigMan;
-import jotato.quantumflux.NbtUtils;
 import jotato.quantumflux.QuantumFlux;
+import jotato.quantumflux.util.NbtUtils;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -25,7 +25,7 @@ import net.minecraftforge.common.util.EnumHelper;
 public class ItemEviscerator extends ItemPickaxe implements IEnergyContainerItem
 {
 
-    public static ToolMaterial material = EnumHelper.addToolMaterial("eviscerator", 10000, 1000, 32, 24, 100);
+    public static ToolMaterial material = EnumHelper.addToolMaterial("eviscerator", 10000, 1000, 32, 24, 25);
     private static final String energy_tag = "Energy";
     private int energyUsedPerHit = 100;
 

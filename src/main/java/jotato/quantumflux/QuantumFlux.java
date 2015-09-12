@@ -2,19 +2,25 @@ package jotato.quantumflux;
 
 import jotato.quantumflux.blocks.ModBlocks;
 import jotato.quantumflux.items.ModItems;
+import jotato.quantumflux.machine.cluster.TileEntityCreativeCluster;
+import jotato.quantumflux.machine.cluster.TileEntityQuibitCluster;
+import jotato.quantumflux.machine.cluster.TileEntityQuibitCluster_1;
+import jotato.quantumflux.machine.cluster.TileEntityQuibitCluster_2;
+import jotato.quantumflux.machine.cluster.TileEntityQuibitCluster_3;
+import jotato.quantumflux.machine.cluster.TileEntityQuibitCluster_4;
+import jotato.quantumflux.machine.cluster.TileEntityQuibitCluster_5;
+import jotato.quantumflux.machine.entangler.TileEntityRFEntangler;
+import jotato.quantumflux.machine.entropyaccelerator.TileEntityEntropyAccelerator;
+import jotato.quantumflux.machine.exciter.TileEntityRFExciter;
+import jotato.quantumflux.machine.fabricator.ItemFabricatorRecipeManager;
+import jotato.quantumflux.machine.fabricator.TileEntityItemFabricator;
+import jotato.quantumflux.machine.imaginarytime.TileEntityImaginaryTime;
+import jotato.quantumflux.machine.storehouse.TileEntityStorehouse;
+import jotato.quantumflux.machine.zpe.TileEntityZeroPointExtractor;
 import jotato.quantumflux.packets.PacketHandler;
 import jotato.quantumflux.proxy.CommonProxy;
 import jotato.quantumflux.redflux.RedfluxField;
-import jotato.quantumflux.tileentity.TileEntityEntropyAccelerator;
-import jotato.quantumflux.tileentity.TileEntityImaginaryTime;
-import jotato.quantumflux.tileentity.TileEntityQuibitCluster_1;
-import jotato.quantumflux.tileentity.TileEntityQuibitCluster_2;
-import jotato.quantumflux.tileentity.TileEntityQuibitCluster_3;
-import jotato.quantumflux.tileentity.TileEntityQuibitCluster_4;
-import jotato.quantumflux.tileentity.TileEntityQuibitCluster_5;
-import jotato.quantumflux.tileentity.TileEntityRFEntangler;
-import jotato.quantumflux.tileentity.TileEntityRFExciter;
-import jotato.quantumflux.tileentity.TileEntityZeroPointExtractor;
+import jotato.quantumflux.world.OreGenerator;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
@@ -27,6 +33,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -49,6 +56,7 @@ public class QuantumFlux
         ModBlocks.init();
         ModItems.init();
         regiterTileEntities();
+      	GameRegistry.registerWorldGenerator(OreGenerator.INSTANCE, 1984);
         FMLCommonHandler.instance().bus().register(new EventHooks());
     }
 
@@ -65,6 +73,11 @@ public class QuantumFlux
         GameRegistry.registerTileEntity(TileEntityQuibitCluster_4.class, "tileQuibitCluster4");
         GameRegistry.registerTileEntity(TileEntityQuibitCluster_5.class, "tileQuibitCluster5");
         GameRegistry.registerTileEntity(TileEntityImaginaryTime.class, "tileImaginaryTime");
+        GameRegistry.registerTileEntity(TileEntityItemFabricator.class, "tileMolecularInfuser");
+        GameRegistry.registerTileEntity(TileEntityQuibitCluster.class, "tileQuibitCluster");
+        GameRegistry.registerTileEntity(TileEntityItemFabricator.class, "tilemolecularInfuser");
+        GameRegistry.registerTileEntity(TileEntityStorehouse.class, "tileStorehouse");
+        GameRegistry.registerTileEntity(TileEntityCreativeCluster.class, "tileCreativeCluster");
     }
 
     @EventHandler
@@ -73,21 +86,23 @@ public class QuantumFlux
         proxy.initCommon();
         proxy.initServer();
         proxy.initClient();
-        new Recipes().init();
         PacketHandler.initPackets();
-
-    
-        
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
+        new CraftingRecipes().init();
     }
     
     @EventHandler
     public void serverStopping(FMLServerStoppingEvent event){
     	RedfluxField.purge();
+    }
+    
+    @EventHandler
+    public void serverStarted(FMLServerStartedEvent event){
+    	ItemFabricatorRecipeManager.refreshRecipes();
     }
 
     public static CreativeTabs tab = new CreativeTabs("tabQuantumFlux") {
@@ -95,7 +110,7 @@ public class QuantumFlux
         @SideOnly(Side.CLIENT)
         public Item getTabIconItem()
         {
-            return ModItems.amplificationCrystal;
+            return ModItems.quibitCrystal;
         }
     };
 }

@@ -6,8 +6,8 @@ import java.util.WeakHashMap;
 
 import cofh.api.energy.IEnergyContainerItem;
 import jotato.quantumflux.ConfigMan;
-import jotato.quantumflux.NbtUtils;
 import jotato.quantumflux.QuantumFlux;
+import jotato.quantumflux.util.NbtUtils;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -33,7 +33,7 @@ public class ItemBattleSuit extends ItemArmor implements IEnergyContainerItem, I
 	public static Map<EntityPlayer, Boolean> entitiesFlying = new WeakHashMap<EntityPlayer, Boolean>();
 	public static Map<EntityPlayer, Boolean> entitiesRunning = new WeakHashMap<EntityPlayer, Boolean>();
 
-	public static ArmorMaterial material = EnumHelper.addArmorMaterial("battleSuitMatieral", 33, new int[] { 4, 9, 7, 4 }, 50);
+	public static ArmorMaterial material = EnumHelper.addArmorMaterial("battleSuitMatieral", 33, new int[] { 3, 8, 6, 3 }, 50);
 	private static final String energy_tag = "Energy";
 	private int energyUsedPerDamageTaken =150;
 	public ItemBattleSuit(String name, int type)
@@ -240,7 +240,7 @@ public class ItemBattleSuit extends ItemArmor implements IEnergyContainerItem, I
 			entitiesFlying.put(player, true);
 			break;
 		case 3:
-			player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 2, 0,true));
+			player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 220, 0,true));
 			player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 2,0,true));
 			break;
 		}
